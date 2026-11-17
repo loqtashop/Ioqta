@@ -54,6 +54,12 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;pa
 .ibtn{min-height:40px;min-width:40px;padding:0 12px;border:1px solid var(--line);background:var(--surface);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .ibtn:hover{border-color:var(--purple)}
 .ibtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.dock{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding-block:28px 0}
+.dk{font-size:13px;color:var(--muted)}
+.dk[aria-expanded="true"]{border-color:var(--purple);color:var(--text)}
+@keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.25)}60%{transform:scale(.95)}100%{transform:scale(1)}}
+.ibtn.bump{animation:bump .6s ease;border-color:var(--purple)}
+.ibtn{position:relative}
 .count{background:var(--burgundy);color:var(--on-accent);border-radius:10px;font-size:12px;min-width:20px;padding:0 6px;line-height:20px;text-align:center}
 .ad{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;background:var(--burgundy);color:var(--on-accent);padding:10px 16px;border-radius:0 0 10px 10px;text-align:center;font-weight:500}
 .adbtn{min-height:36px;padding:0 14px;border-radius:18px;border:1px solid currentColor;background:transparent;color:inherit}
@@ -204,7 +210,6 @@ footer .link{min-height:40px;padding:8px 10px}
 <div class="hero">
   <h1 data-i18n="h1"></h1>
   <p data-i18n="sub"></p>
-  <p class="sellgo"><button class="link" id="sellGo" data-i18n="sellLink"></button></p>
 </div>
 
 
@@ -214,7 +219,7 @@ footer .link{min-height:40px;padding:8px 10px}
 <div class="fbar" id="fbar"></div>
 <div class="grid" id="grid"></div>
 
-<section id="cart">
+<section id="cart" hidden>
   <h2 data-i18n="cartTitle"></h2>
   <div class="cols">
     <div class="panel">
@@ -244,7 +249,7 @@ footer .link{min-height:40px;padding:8px 10px}
   </div>
 </section>
 
-<section id="sell">
+<section id="sell" hidden>
   <h2 data-i18n="sellTitle"></h2>
   <div class="cols">
     <div class="panel">
@@ -273,7 +278,7 @@ footer .link{min-height:40px;padding:8px 10px}
   </div>
 </section>
 
-<section id="merchant">
+<section id="merchant" hidden>
   <h2 data-i18n="merTitle"></h2>
   <div class="cols">
     <div class="panel">
@@ -303,6 +308,11 @@ footer .link{min-height:40px;padding:8px 10px}
     </form>
   </div>
 </section>
+
+<div class="dock" id="dock">
+  <button class="ibtn dk" id="sellBtn" aria-expanded="false" aria-controls="sell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg><span data-i18n="dockSell"></span></button>
+  <button class="ibtn dk" id="merBtn" aria-expanded="false" aria-controls="merchant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9c0 1.7 1.3 3 2.7 3S9.3 10.7 9.3 9c0 1.7 1.3 3 2.7 3s2.7-1.3 2.7-3c0 1.7 1.3 3 2.7 3S20 10.7 20 9M10 20v-5h4v5"/></svg><span data-i18n="dockMer"></span></button>
+</div>
 
 <section id="reviews" hidden>
   <h2 data-i18n="revTitle"></h2>
@@ -373,7 +383,7 @@ sellLink:"عندك حاجة مستعملة؟ بيعها لينا",sellTitle:"ب�
 sellS1:"عبّي بيانات القطعة هنا.",sellS2:"هيفتح واتساب برسالة جاهزة. ابعتها وابعت معاها صور القطعة من كل ناحية، وصورة لأي عيب لو فيه.",sellS3:"بنراجع القطعة ونرد عليك بالخطوة الجاية.",
 sItem:"اسم القطعة",sCat:"القسم",sCond:"حالتها",sPrice:"السعر اللي عايزه (بالجنيه)",sDesc:"وصف قصير والعيوب لو فيه",sBtn:"ابعت على واتساب",eItem:"اكتب اسم القطعة.",ePrice2:"اكتب سعر أكبر من صفر.",
 sellHead:"عرض بيع قطعة على لقطة",sellPrice:"السعر المطلوب",sellDesc:"الوصف",sellPics:"هبعت صور القطعة في المحادثة.",sellOk:"رسالتك جاهزة",sellNote:"لسه ما اتبعتتش. اضغط الزر وابعتها على واتساب، وابعت معاها صور القطعة.",sellOpen:"افتح واتساب وابعت",
-viewPhotos:"شوف صور المنتج",merLink:"تاجر؟ اعرض منتجك",merTitle:"تاجر؟ اعرض منتجك الجديد",merSub:"عندك منتجات جديدة وعايز تعرضها على لقطة؟ ابعتلنا بيانات المنتج وصوره، ونراجعه ونرد عليك بالشروط والخطوة الجاية.",
+viewPhotos:"شوف صور المنتج",dockSell:"بيع قطعتك",dockMer:"عرض منتج جديد",cartAdded:"اتضافت للسلة. افتح السلة من الأيقونة فوق",merLink:"تاجر؟ اعرض منتجك",merTitle:"تاجر؟ اعرض منتجك الجديد",merSub:"عندك منتجات جديدة وعايز تعرضها على لقطة؟ ابعتلنا بيانات المنتج وصوره، ونراجعه ونرد عليك بالشروط والخطوة الجاية.",
 merS1:"عبّي بيانات المنتج هنا.",merS2:"هيفتح واتساب برسالة جاهزة. ابعتها وابعت معاها صور المنتج من كل ناحية.",merS3:"بنراجع المنتج ونرد عليك.",
 mStore:"اسم المتجر أو العلامة (اختياري)",mItem:"اسم المنتج",mQty:"الكمية المتاحة",mPrice:"سعر البيع (بالجنيه)",mDesc:"وصف قصير للمنتج",eMItem:"اكتب اسم المنتج.",eMQty:"اكتب كمية صحيحة.",
 merHead:"عرض منتج جديد من تاجر على لقطة",merStore:"المتجر",merQty:"الكمية",merPics:"هبعت صور المنتج في المحادثة.",merOk:"رسالتك جاهزة",
@@ -424,7 +434,7 @@ sellLink:"Got something used? Sell it to us",sellTitle:"Sell your item",sellSub:
 sellS1:"Fill in the item details here.",sellS2:"WhatsApp opens with a ready message. Send it along with photos of the item from every side, and a photo of any flaw.",sellS3:"We review it and reply with the next step.",
 sItem:"Item name",sCat:"Section",sCond:"Its condition",sPrice:"Your asking price (EGP)",sDesc:"Short description and flaws, if any",sBtn:"Send on WhatsApp",eItem:"Enter the item name.",ePrice2:"Enter a price above zero.",
 sellHead:"Item for sale on Laqta",sellPrice:"Asking price",sellDesc:"Description",sellPics:"I'll send the item photos in this chat.",sellOk:"Your message is ready",sellNote:"Not sent yet. Tap the button and send it on WhatsApp, along with photos of the item.",sellOpen:"Open WhatsApp and send",
-viewPhotos:"View product photos",merLink:"Merchant? List your product",merTitle:"Merchant? List your new product",merSub:"Got new products and want to list them on Laqta? Send us the product details and photos. We review it and reply with the terms and the next step.",
+viewPhotos:"View product photos",dockSell:"Sell yours",dockMer:"List a product",cartAdded:"Added to cart. Open the cart icon above",merLink:"Merchant? List your product",merTitle:"Merchant? List your new product",merSub:"Got new products and want to list them on Laqta? Send us the product details and photos. We review it and reply with the terms and the next step.",
 merS1:"Fill in the product details here.",merS2:"WhatsApp opens with a ready message. Send it along with photos of the product from every side.",merS3:"We review the product and reply.",
 mStore:"Store or brand name (optional)",mItem:"Product name",mQty:"Quantity available",mPrice:"Selling price (EGP)",mDesc:"Short product description",eMItem:"Enter the product name.",eMQty:"Enter a valid quantity.",
 merHead:"New product from a merchant on Laqta",merStore:"Store",merQty:"Quantity",merPics:"I'll send the product photos in this chat.",merOk:"Your message is ready",
@@ -563,7 +573,7 @@ function renderCart(){
   cart=cart.filter(function(i){return pById(i.id)});
   $("cartItems").innerHTML=cart.length?cart.map(function(i){var p=pById(i.id);sub+=p.p*i.q;n+=i.q;
     return '<div class="row"><span class="t">'+esc(pname(p))+'</span><span class="qty"><button data-qm="'+p.id+'" aria-label="-">-</button><span class="sum">'+i.q+'</span><button data-qp="'+p.id+'" aria-label="+">+</button></span><span class="sum">'+money(p.p*i.q)+'</span><button class="link" data-rm="'+p.id+'">'+t("remove")+'</button></div>'}).join(""):'<div class="empty">'+t("empty")+'</div>';
-  $("cartCount").textContent=n;
+  $("cartCount").textContent=n;$("cartCount").hidden=!n;
   var sh=cart.length?shipPrice():0;
   $("sSub").textContent=money(sub);
   $("sShip").textContent=$("fGov").value?money(sh):"—";
@@ -655,7 +665,7 @@ document.addEventListener("click",function(e){
   if(b.dataset.f){filter=b.dataset.f;cat="all";renderStatic();renderGrid();return}
   if(b.dataset.k){cat=b.dataset.k;renderStatic();renderGrid();return}
   if(b.dataset.r){role=b.dataset.r;editing=null;draftImg="";confirmDel=false;confirmReset=false;renderGrid();renderPanel();return}
-  if(b.dataset.id){addToCart(+b.dataset.id);renderGrid();renderCart();return}
+  if(b.dataset.id){var n0=cart.length;addToCart(+b.dataset.id);renderGrid();renderCart();if(cart.length>n0){bumpCart();toast(t("cartAdded"))}return}
   if(b.dataset.rm){cart=cart.filter(function(i){return i.id!==+b.dataset.rm});renderGrid();renderCart();return}
   if(b.dataset.qm){setQty(+b.dataset.qm,-1);renderCart();return}
   if(b.dataset.qp){setQty(+b.dataset.qp,1);renderCart();return}
@@ -705,7 +715,14 @@ document.addEventListener("change",function(e){
 document.addEventListener("input",function(e){
   if(e.target.id==="c1"||e.target.id==="c2"){S.c1=$("c1").value;S.c2=$("c2").value;applyColors()}
 });
-$("cartBtn").addEventListener("click",function(){$("cart").scrollIntoView({behavior:"smooth"})});
+function openSec(id,toggle){var el=$(id),show=toggle?el.hidden:true;el.hidden=!show;
+  var bt={cart:"cartBtn",sell:"sellBtn",merchant:"merBtn"}[id];if(bt){var x=$(bt);if(x)x.setAttribute("aria-expanded",show)}
+  if(show)el.scrollIntoView({behavior:"smooth"})}
+function bumpCart(){var c=$("cartBtn");c.classList.remove("bump");void c.offsetWidth;c.classList.add("bump")}
+$("cartBtn").setAttribute("aria-expanded","false");$("cartBtn").setAttribute("aria-controls","cart");
+$("cartBtn").addEventListener("click",function(){openSec("cart",true)});
+$("sellBtn").addEventListener("click",function(){openSec("sell",true)});
+$("merBtn").addEventListener("click",function(){openSec("merchant",true)});
 $("langBtn").addEventListener("click",function(){lang=lang==="ar"?"en":"ar";setPref("laqta-lang",lang);renderAll()});
 $("themeBtn").addEventListener("click",function(){
   var d=document.documentElement,cur=d.getAttribute("data-theme");
@@ -760,9 +777,8 @@ document.addEventListener("click",function(e){
   if(b.id==="lbp"){stepLb(LD());return}
   if(b.id==="lbn"){stepLb(-LD());return}
   if(b.id==="lbx"){$("lb").hidden=true;return}
-  if(b.id==="merGo"){$("merchant").scrollIntoView({behavior:"smooth"});return}
-  if(b.id==="sellGo"){$("sell").scrollIntoView({behavior:"smooth"});return}
-  if(b.id==="polBtn"){var sc=$("policy");sc.hidden=!sc.hidden;if(!sc.hidden)sc.scrollIntoView({behavior:"smooth"});return}
+  if(b.id==="merGo"){openSec("merchant");return}
+    if(b.id==="polBtn"){var sc=$("policy");sc.hidden=!sc.hidden;if(!sc.hidden)sc.scrollIntoView({behavior:"smooth"});return}
 });
 $("lb").addEventListener("click",function(e){if(e.target===this)this.hidden=true});
 document.addEventListener("keydown",function(e){if($("lb").hidden)return;if(e.key==="Escape")$("lb").hidden=true;if(e.key==="ArrowLeft")stepLb(LD());if(e.key==="ArrowRight")stepLb(-LD())});
